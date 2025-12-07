@@ -56,7 +56,7 @@ func (crm CRM) ViewCustomer(id int) {
 
 func (crm CRM) ViewAllCustomers() {
 	if len(crm.customers) == 0 {
-		fmt.Println("No customers foudn")
+		fmt.Println("No customers ")
 		return
 	}
 
@@ -109,7 +109,7 @@ func main() {
 
 	// make it run indefinitely
 	for {
-		fmt.Println("\nCRM System Menu:")
+		fmt.Println("\n\n========\n========\nCRM System Menu:")
 		fmt.Println("1. Add Customer")
 		fmt.Println("2. View Customer")
 		fmt.Println("3. View All Customers")
@@ -117,19 +117,19 @@ func main() {
 		fmt.Println("5. Delete Customer")
 		fmt.Println("6. Exit")
 
-		option := getInput("Choose an option (1-6)")
+		option := getInput("Choose an option (1-6): ")
 
 		switch strings.TrimSpace(option) {
 		case "1":
 			// add customer
-			firstName := getInput("Enter cust. first name:")
-			last := getInput("Enter cust. last name:")
-			e := getInput("Enter email:")
-			num := getInput("Enter phone:")
+			firstName := getInput("Enter cust. first name: ")
+			last := getInput("Enter cust. last name: ")
+			e := getInput("Enter email: ")
+			num := getInput("Enter phone: ")
 			crm.addCustomer(firstName, last, e, num)
 		case "2":
 			// view customer of id
-			id := getInput("Enter customer ID to view:")
+			id := getInput("Enter customer ID to view: ")
 
 			customerID, err := strconv.Atoi(id)
 			if err != nil {
@@ -142,22 +142,28 @@ func main() {
 			crm.ViewAllCustomers()
 		case "4":
 			//update customer
-			id := getInput("Enter customer id")
+			id := getInput("Enter customer id: ")
 			customerID, err := strconv.Atoi(id)
 			if err != nil {
 				fmt.Println("Invalid customer id")
 				break
 			}
 
-			first := getInput("Enter first name:")
-			last := getInput("Enter last name:")
-			email := getInput("Enter email:")
-			num := getInput("Enter phone num:")
+			_, exists := crm.customers[customerID]
+			if !exists {
+				fmt.Printf("Customer with ID %d DONT EXIST!", customerID)
+				break
+			}
+
+			first := getInput("Enter first name: ")
+			last := getInput("Enter last name: ")
+			email := getInput("Enter email: ")
+			num := getInput("Enter phone num: ")
 
 			crm.UpdateCustomer(customerID, first, last, email, num)
 		case "5":
 			// Delete customer
-			id := "Enter Customer iD to DeLeTe:"
+			id := getInput("Enter Customer iD to DeLeTe: ")
 			customerID, err := strconv.Atoi(id)
 			if err != nil {
 				fmt.Println("Invalid customer id")
